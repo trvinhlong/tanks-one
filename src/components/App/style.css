@@ -1,24 +1,38 @@
+@font-face {
+  font-family: 'ArmaliteRifle';
+  font-style: normal;
+  font-weight: 100;
+  src: url('../../fonts/armalite_rifle.ttf');
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.App-header {
+  color: #829074;
+  padding-bottom: 20px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.App-title {
+  font-size: 50px;
+  font-family: ArmaliteRifle;
 }
 
 .App-intro {
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+#logo {
+  width: 200px;
+  height: 200px;
+}
+
+#footer {
+  height: 80px;
+  width: 100%;
+  background-color: lightblue;
+  padding-top: 20px;
+  font-size: 20px;
+  text-align: center;
 }

@@ -57,4 +57,8 @@ typings/
 # dotenv environment variables file
 .env
 package-lock.json
-
+build
+server/public/images
+src/Config.js
+server/config.js
+.idea
