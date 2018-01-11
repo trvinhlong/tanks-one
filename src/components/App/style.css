@@ -10,12 +10,13 @@
 }
 
 .App-header {
-  color: #829074;
   padding-bottom: 20px;
 }
 
 .App-title {
-  font-size: 50px;
+  padding: 10px;
+  color: #829074;
+  font-size: 40px;
   font-family: ArmaliteRifle;
 }
 
@@ -24,8 +25,7 @@
 }
 
 #logo {
-  width: 200px;
-  height: 200px;
+  width: 250px;
 }
 
 #footer {
