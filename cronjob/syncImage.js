@@ -6,7 +6,7 @@ var job = new cron.CronJob({
   cronTime: '45 * * * *',
   onTick: function() {
     
-	request('http://www.google.com', function (error, response, body) {
+	request('http://tanks.vn/facebook/login', function (error, response, body) {
 
 	});
   },
