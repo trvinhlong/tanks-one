@@ -82,7 +82,7 @@ class InStock extends React.Component {
         return (
             <div>
                 <div>{this.generateLinks(this.cats)}</div>
-                <hr>
+                <hr />
                 <div>{this.generateLinks(this.manufactures)}</div>
                 <Gallery photos={this.state.photos} onClick={this.openLightbox} />
                 <Lightbox images={this.state.photos}
