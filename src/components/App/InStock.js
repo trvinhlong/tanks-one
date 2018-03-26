@@ -11,23 +11,51 @@ ReactGA.initialize(Config.gaTrackingId);
 class InStock extends React.Component {
     constructor() {
         super();
-        this.state = { currentImage: 0 };
+        this.state = { currentImage: 0, selectedKeyword: '' };
         this.closeLightbox = this.closeLightbox.bind(this);
         this.openLightbox = this.openLightbox.bind(this);
         this.gotoNext = this.gotoNext.bind(this);
-        this.gotoPrevious = this.gotoPrevious.bind(this);
+        this.getPhotoByKeyword = this.getPhotoByKeyword.bind(this)
         this.state.photos = [];
-        this.getPhotos();
+        this.getAllPhotos();
+        this.manufactures = [
+            {label: 'Trumpeter', keyword: 'trumpeter'},
+            {label: 'Tamiya', keyword: 'tamiya'},
+            {label: 'Dragon', keyword: 'dragon'},
+            {label: 'Italeri', keyword: 'italeri'},
+            {label: 'Zvezda', keyword: 'zvezda'}
+        ];
+        this.cats = [
+            {label: 'Mô hình xe tăng, pháo binh', keyword: 'tank'},
+            {label: 'Mô hình tàu chiến', keyword: 'ship'},
+            {label: 'Mô hình ', keyword: 'soilder'},
+            {label: 'Mô hình giả tưởng', keyword: 'robot'},
+        ];
+    }
+
+    generateLinks(links) {
+        var generatedLinks =  links.map(link => {
+            return (<li className={this.state.selectedKeyword === link.keyword ? "selected-keyword" : ""}><a href="#" onClick={e => {this.getPhotoByKeyword(link.keyword)}}>{link.label}</a></li>)
+        });
+        return (<ul><li><a href="#" onClick={e => {this.getAllPhotos()}}>Xem toàn bộ</a></li>{generatedLinks}</ul>)
     }
 
     componentDidMount() {
         ReactGA.pageview(window.location.href);
     }
 
-    getPhotos() {
+    getAllPhotos() {
+        this.setState({selectedKeyword: ""});
         $.getJSON(Config.apiHost + '/photos')
             .then(( results ) => { this.setState({ photos: results }); console.log(results); })
     }
+
+    getPhotoByKeyword(keyword) {
+        this.setState({selectedKeyword: keyword});
+        $.getJSON(Config.apiHost + '/photos/' + keyword)
+            .then(( results ) => { this.setState({ photos: results }); console.log(results); })
+    }
+
     openLightbox(event, obj) {
         this.setState({
             currentImage: obj.index,
@@ -53,6 +81,8 @@ class InStock extends React.Component {
     render() {
         return (
             <div>
+                <div>{this.generateLinks(this.cats)}</div>
+                <div>{this.generateLinks(this.manufactures)}</div>
                 <Gallery photos={this.state.photos} onClick={this.openLightbox} />
                 <Lightbox images={this.state.photos}
                           onClose={this.closeLightbox}

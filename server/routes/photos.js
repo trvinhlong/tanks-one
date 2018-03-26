@@ -14,4 +14,16 @@ router.get('/', function(req, res, next) {
 	});
 });
 
+router.get('/:keyword', function(req, res, next) {
+	var keyword = req.params['keyword'];
+	console.log(keyword);
+    fs.readdir('./server/public/images', function(err, items) {
+        res.json(items.filter(item => item.includes(keyword)).map(function (item) {
+            return {
+                src: config.apiHost + '/images/' +  item, width: 9, height: 6
+            }
+        }));
+    });
+});
+
 module.exports = router;

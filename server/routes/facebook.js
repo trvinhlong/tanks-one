@@ -35,19 +35,19 @@ function getPhotos() {
     })
     FB.api('913563252113498/photos', { fields: 'images,name', limit: 50 }, function (res) {
         if(!res || res.error) {
-            console.log(!res ? 'error occurred' : res.error)
+            console.log(!res ? 'error occurred' : res.error);
             return;
         }
         // remove all existing files
         fs.readdir('./server/public/images', function(err, items) {
             items.forEach(function(img, index) {
-              fs.unlink('./server/public/images/' + index + '.jpg', function(){console.log('deleted ' + index)});
+              fs.unlink('./server/public/images/' + img, function(){console.log('deleted' + img)});
             });
         });
         
-        // download new files
+        //download new files
         res['data'].forEach((img, index) => {
-            download(img['images'][0]['source'], './server/public/images/' + index + '.jpg', function(){console.log('downloaded ' + index)});
+            download(img['images'][0]['source'], './server/public/images/' + img['name'] + '.jpg', function(){console.log('downloaded ' + img['name'])});
         });
     })
 }
