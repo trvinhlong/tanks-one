@@ -11,12 +11,11 @@ ReactGA.initialize(Config.gaTrackingId);
 class InStock extends React.Component {
     constructor() {
         super();
-        this.state = { currentImage: 0, selectedKeyword: '' };
+        this.state = { currentImage: 0, selectedKeyword: '', photos: [], displayedPhotos: [] };
         this.closeLightbox = this.closeLightbox.bind(this);
         this.openLightbox = this.openLightbox.bind(this);
         this.gotoNext = this.gotoNext.bind(this);
         this.getPhotoByKeyword = this.getPhotoByKeyword.bind(this)
-        this.state.photos = [];
         this.getAllPhotos();
         this.manufactures = [
             {label: 'Trumpeter', keyword: 'trumpeter'},
@@ -47,35 +46,38 @@ class InStock extends React.Component {
     getAllPhotos() {
         this.setState({selectedKeyword: ""});
         $.getJSON(Config.apiHost + '/photos')
-            .then(( results ) => { this.setState({ photos: results }); console.log(results); })
+            .then(( results ) => { this.setState({ photos: results, displayedPhotos: results }); console.log(results); })
     }
 
     getPhotoByKeyword(keyword) {
-        this.setState({selectedKeyword: keyword});
-        $.getJSON(Config.apiHost + '/photos/' + keyword)
-            .then(( results ) => { this.setState({ photos: results }); console.log(results); })
+        this.setState({
+            selectedKeyword: keyword,
+            displayedPhotos: [...this.state.photos].filter(photo => photo.name.includes(keyword))
+        });
+    //     $.getJSON(Config.apiHost + '/photos/' + keyword)
+    //         .then(( results ) => { this.setState({ photos: results }); console.log(results); })
     }
 
     openLightbox(event, obj) {
         this.setState({
             currentImage: obj.index,
-            lightboxIsOpen: true,
+            lightboxIsOpen: true
         });
     }
     closeLightbox() {
         this.setState({
             currentImage: 0,
-            lightboxIsOpen: false,
+            lightboxIsOpen: false
         });
     }
     gotoPrevious() {
         this.setState({
-            currentImage: this.state.currentImage - 1,
+            currentImage: this.state.currentImage - 1
         });
     }
     gotoNext() {
         this.setState({
-            currentImage: this.state.currentImage + 1,
+            currentImage: this.state.currentImage + 1
         });
     }
     render() {
@@ -84,8 +86,8 @@ class InStock extends React.Component {
                 <div>{this.generateLinks(this.cats)}</div>
                 <hr />
                 <div>{this.generateLinks(this.manufactures)}</div>
-                <Gallery photos={this.state.photos} onClick={this.openLightbox} />
-                <Lightbox images={this.state.photos}
+                <Gallery photos={this.state.displayedPhotos} onClick={this.openLightbox} />
+                <Lightbox images={this.state.displayedPhotos}
                           onClose={this.closeLightbox}
                           onClickPrev={this.gotoPrevious}
                           onClickNext={this.gotoNext}
