@@ -28,7 +28,7 @@ class InStock extends React.Component {
         this.cats = [
             {label: 'Mô hình xe tăng, pháo binh', keyword: 'tank'},
             {label: 'Mô hình tàu chiến', keyword: 'ship'},
-            {label: 'Mô hình ', keyword: 'soilder'},
+            {label: 'Mô hình lính', keyword: 'soilder'},
             {label: 'Mô hình giả tưởng', keyword: 'robot'},
         ];
     }
